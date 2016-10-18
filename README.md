@@ -33,7 +33,7 @@ target_link_libraries (main ${OpenCL_LIBRARY})
 ## How to use?
 
 ```c++
-#include "opencl/OpenCLControl.h"
+#include "<wrapper-folder>/OpenCLControl.h"
 
 int main(int argc, char** argv) {
   OpenCLControl* control = new OpenCLControl(CL_DEVICE_TYPE_CPU); // default = CL_DEVICE_TYPE_DEFAULT
