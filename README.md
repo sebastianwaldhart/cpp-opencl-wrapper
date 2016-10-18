@@ -1,7 +1,7 @@
 # cpp-opencl-wrapper
 
 CMakeLists.txt for OpenCL:
-'''cmake
+```cmake
 cmake_minimum_required (VERSION 2.8)
 project(opencl_project)
 
@@ -26,4 +26,4 @@ add_executable(main ${WRAPPER} main.cpp)
 
 target_include_directories (main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries (main ${OpenCL_LIBRARY})
-'''
+```
