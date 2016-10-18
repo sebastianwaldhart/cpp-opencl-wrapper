@@ -1,4 +1,6 @@
-# cpp-opencl-wrapper
+# C++ OpenCL Wrapper
+
+## How to build?
 
 CMakeLists.txt for OpenCL:
 ```cmake
@@ -26,4 +28,33 @@ add_executable(main ${WRAPPER} main.cpp)
 
 target_include_directories (main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries (main ${OpenCL_LIBRARY})
+```
+
+## How to use?
+
+```c++
+#include "opencl/OpenCLControl.h"
+
+int main(int argc, char** argv) {
+  OpenCLControl* control = new OpenCLControl(CL_DEVICE_TYPE_CPU); // default = CL_DEVICE_TYPE_DEFAULT
+  
+  OpenCLBufferObject* buffer = control->createBufferObject(sizeof(cl_float) * 100);
+  
+  OpenCLProgram* program = control->createProgram("kernel.cl");
+  OpenCLKernel* kernel = control->createKernel(program, "kernelName");
+  
+  cl_uint X = 10;
+  kernel->setArgument(0, sizeof(cl_uint), &X);
+  kernel->setArgument(1, buffer);
+  
+  size_t worksize[2] = [10, 10];
+  kernel->enqueueNDRangeKernel(2, (const size_t*) worksize);
+  
+  kernel->sync();
+  
+  delete(control); // releases all OpenCL Objects created with this object
+  
+  return 0;
+}
+
 ```
