@@ -204,77 +204,79 @@ void OpenCLContext::synchronize() {
 void OpenCLContext::handleError(cl_int error) {
     switch(error) {
         case CL_INVALID_PLATFORM: 
-            std::cerr << "ERROR: platform is not valid" << std::endl; break;
+            std::cerr << "ERROR: platform is not valid (CL_INVALID_PLATFORM)" << std::endl; break;
         case CL_INVALID_DEVICE_TYPE: 
-            std::cerr << "ERROR: device_type is not valid" << std::endl; break;
+            std::cerr << "ERROR: device_type is not valid (CL_INVALID_DEVICE_TYPE)" << std::endl; break;
+        case CL_DEVICE_NOT_FOUND: 
+            std::cerr << "ERROR: no device found matching device type (CL_DEVICE_NOT_FOUND)" << std::endl; break;
         case CL_INVALID_VALUE: 
-            std::cerr << "ERROR: wrong parameter" << std::endl; break;
+            std::cerr << "ERROR: wrong parameter (CL_INVALID_VALUE)" << std::endl; break;
         case CL_INVALID_DEVICE:
-            std::cerr << "ERROR: devices contains an invalid device or a device does not match device_type" << std::endl; break;
+            std::cerr << "ERROR: devices contains an invalid device or a device does not match device_type (CL_INVALID_DEVICE)" << std::endl; break;
         case CL_DEVICE_NOT_AVAILABLE:
-            std::cerr << "ERROR: a device is currently not available" << std::endl; break;
+            std::cerr << "ERROR: a device is currently not available (CL_DEVICE_NOT_AVAILABLE)" << std::endl; break;
         case CL_OUT_OF_HOST_MEMORY:
-            std::cerr << "ERROR: can't require resources on host'" << std::endl; break;
+            std::cerr << "ERROR: can't require resources on host (CL_OUT_OF_HOST_MEMORY)" << std::endl; break;
         case CL_OUT_OF_RESOURCES:
-            std::cerr << "ERROR: can't require resources on device" << std::endl; break;
+            std::cerr << "ERROR: can't require resources on device (CL_OUT_OF_RESOURCES)" << std::endl; break;
         case CL_INVALID_QUEUE_PROPERTIES:
-            std::cerr << "ERROR: properties for queue are not supported by device" << std::endl; break;
+            std::cerr << "ERROR: properties for queue are not supported by device (CL_INVALID_QUEUE_PROPERTIES)" << std::endl; break;
         case CL_INVALID_COMMAND_QUEUE:
-            std::cerr << "ERROR: invalid command queue" << std::endl; break;
+            std::cerr << "ERROR: invalid command queue (CL_INVALID_COMMAND_QUEUE)" << std::endl; break;
         case CL_INVALID_CONTEXT:
-            std::cerr << "ERROR: invalid context" << std::endl; break;
+            std::cerr << "ERROR: invalid context (CL_INVALID_CONTEXT)" << std::endl; break;
         case CL_INVALID_BUFFER_SIZE:
-            std::cerr << "ERROR: invalid buffer size" << std::endl; break;
+            std::cerr << "ERROR: invalid buffer size (CL_INVALID_BUFFER_SIZE)" << std::endl; break;
         case CL_INVALID_HOST_PTR:
-            std::cerr << "ERROR: invalid host pointer" << std::endl; break;
+            std::cerr << "ERROR: invalid host pointer (CL_INVALID_HOST_PTR)" << std::endl; break;
         case CL_MEM_OBJECT_ALLOCATION_FAILURE:
-            std::cerr << "ERROR: can't allocate memory for buffer" << std::endl; break;
+            std::cerr << "ERROR: can't allocate memory for buffer (CL_MEM_OBJECT_ALLOCATION_FAILURE)" << std::endl; break;
         case CL_INVALID_MEM_OBJECT:
-            std::cerr << "ERROR: invalid mem_object" << std::endl; break;
+            std::cerr << "ERROR: invalid mem_object (CL_INVALID_MEM_OBJECT)" << std::endl; break;
         case CL_INVALID_PROGRAM:
-            std::cerr << "ERROR: invalid program" << std::endl; break;
+            std::cerr << "ERROR: invalid program (CL_INVALID_PROGRAM)" << std::endl; break;
         case CL_INVALID_BUILD_OPTIONS:
-            std::cerr << "ERROR: invalid build options" << std::endl; break;
+            std::cerr << "ERROR: invalid build options (CL_INVALID_BUILD_OPTIONS)" << std::endl; break;
         case CL_INVALID_OPERATION:
-            std::cerr << "ERROR: invalid operation" << std::endl; break;
+            std::cerr << "ERROR: invalid operation (CL_INVALID_OPERATION)" << std::endl; break;
         case CL_COMPILER_NOT_AVAILABLE:
-            std::cerr << "ERROR: compiler is not available" << std::endl; break;
+            std::cerr << "ERROR: compiler is not available (CL_COMPILER_NOT_AVAILABLE)" << std::endl; break;
         case CL_INVALID_KERNEL_NAME:
-            std::cerr << "ERROR: invalid kernel name" << std::endl; break;
+            std::cerr << "ERROR: invalid kernel name (CL_INVALID_KERNEL_NAME)" << std::endl; break;
         case CL_INVALID_KERNEL_DEFINITION:
-            std::cerr << "ERROR: invalid kernel definition" << std::endl; break;
+            std::cerr << "ERROR: invalid kernel definition (CL_INVALID_KERNEL_DEFINITION)" << std::endl; break;
         case CL_INVALID_PROGRAM_EXECUTABLE:
-            std::cerr << "ERROR: invalid program executable" << std::endl; break;
+            std::cerr << "ERROR: invalid program executable (CL_INVALID_PROGRAM_EXECUTABLE)" << std::endl; break;
         case CL_INVALID_KERNEL:
-            std::cerr << "ERROR: invalid kernel" << std::endl; break;
+            std::cerr << "ERROR: invalid kernel (CL_INVALID_KERNEL)" << std::endl; break;
         case CL_INVALID_ARG_INDEX:
-            std::cerr << "ERROR: invalid argument index" << std::endl; break;
+            std::cerr << "ERROR: invalid argument index (CL_INVALID_ARG_INDEX)" << std::endl; break;
         case CL_INVALID_ARG_VALUE:
-            std::cerr << "ERROR: invalid argument value" << std::endl; break;
+            std::cerr << "ERROR: invalid argument value (CL_INVALID_ARG_VALUE)" << std::endl; break;
         case CL_INVALID_ARG_SIZE:
-            std::cerr << "ERROR: invalid argument size" << std::endl; break;
+            std::cerr << "ERROR: invalid argument size (CL_INVALID_ARG_SIZE)" << std::endl; break;
         case CL_INVALID_SAMPLER:
-            std::cerr << "ERROR: invalid sampler" << std::endl; break;
+            std::cerr << "ERROR: invalid sampler (CL_INVALID_SAMPLER)" << std::endl; break;
         case CL_INVALID_WORK_GROUP_SIZE:
-            std::cerr << "ERROR: invalid work group size" << std::endl; break;
+            std::cerr << "ERROR: invalid work group size (CL_INVALID_WORK_GROUP_SIZE)" << std::endl; break;
         case CL_INVALID_EVENT_WAIT_LIST:
-            std::cerr << "ERROR: invalid event wait list" << std::endl; break;
+            std::cerr << "ERROR: invalid event wait list (CL_INVALID_EVENT_WAIT_LIST)" << std::endl; break;
         case CL_INVALID_WORK_DIMENSION:
-            std::cerr << "ERROR: invalid work dimension" << std::endl; break;
+            std::cerr << "ERROR: invalid work dimension (CL_INVALID_WORK_DIMENSION)" << std::endl; break;
         case CL_INVALID_GLOBAL_WORK_SIZE:
-            std::cerr << "ERROR: invalid global work size" << std::endl; break;
+            std::cerr << "ERROR: invalid global work size (CL_INVALID_GLOBAL_WORK_SIZE)" << std::endl; break;
         case CL_INVALID_GLOBAL_OFFSET:
-            std::cerr << "ERROR: invalid global offset" << std::endl; break;
+            std::cerr << "ERROR: invalid global offset (CL_INVALID_GLOBAL_OFFSET)" << std::endl; break;
         case CL_INVALID_WORK_ITEM_SIZE:
-            std::cerr << "ERROR: invalid work item size" << std::endl; break;
+            std::cerr << "ERROR: invalid work item size (CL_INVALID_WORK_ITEM_SIZE)" << std::endl; break;
         case CL_MISALIGNED_SUB_BUFFER_OFFSET:
-            std::cerr << "ERROR: misaligned sub buffer offset" << std::endl; break;
+            std::cerr << "ERROR: misaligned sub buffer offset (CL_MISALIGNED_SUB_BUFFER_OFFSET)" << std::endl; break;
         case CL_INVALID_IMAGE_SIZE:
-            std::cerr << "ERROR: invalid image size" << std::endl; break;
+            std::cerr << "ERROR: invalid image size (CL_INVALID_IMAGE_SIZE)" << std::endl; break;
         case CL_INVALID_BINARY:
-            std::cerr << "ERROR: invalid binary" << std::endl; break;
+            std::cerr << "ERROR: invalid binary (CL_INVALID_BINARY)" << std::endl; break;
         case CL_BUILD_PROGRAM_FAILURE:
-            std::cerr << "ERROR: a error occured while building program" << std::endl; break;
+            std::cerr << "ERROR: a error occured while building program (CL_BUILD_PROGRAM_FAILURE)" << std::endl; break;
         default: 
             std::cerr << "ERROR: unknown error occured" << std::endl;
     }
