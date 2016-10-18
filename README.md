@@ -17,12 +17,12 @@ message(STATUS "OpenCL libraries: ${OPENCL_LIBRARIES}")
 include_directories(${OpenCL_INCLUDE_DIRS})
 link_directories(${OpenCL_LIBRARY})
 
-set(WRAPPER <wrapper-folder>/OpenCLControl.cpp opencl/OpenCLControl.h)
-set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLContext.cpp opencl/OpenCLContext.h)
-set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLBufferObject.cpp opencl/OpenCLBufferObject.h)
-set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLProgram.cpp opencl/OpenCLProgram.h)
-set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLKernel.cpp opencl/OpenCLKernel.h)
-set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLAbstractObject.cpp opencl/OpenCLAbstractObject.h)
+set(WRAPPER <wrapper-folder>/OpenCLControl.cpp <wrapper-folder>/OpenCLControl.h)
+set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLContext.cpp <wrapper-folder>/OpenCLContext.h)
+set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLBufferObject.cpp <wrapper-folder>/OpenCLBufferObject.h)
+set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLProgram.cpp <wrapper-folder>/OpenCLProgram.h)
+set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLKernel.cpp <wrapper-folder>/OpenCLKernel.h)
+set(WRAPPER ${WRAPPER} <wrapper-folder>/OpenCLAbstractObject.cpp <wrapper-folder>/OpenCLAbstractObject.h)
 
 add_executable(main ${WRAPPER} main.cpp)
 
