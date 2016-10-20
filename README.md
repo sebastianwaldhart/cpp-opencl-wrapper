@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
   
   kernel->sync();
   
-  delete(control); // releases all OpenCL Objects created with this object
+  delete(control); // releases all OpenCL Objects created with control
   
   return 0;
 }
