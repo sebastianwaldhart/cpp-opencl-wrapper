@@ -18,7 +18,7 @@ class OpenCLControl {
         std::vector<OpenCLAbstractObject*> _objects;
         
     public:
-        OpenCLControl(cl_device_type type = CL_DEVICE_TYPE_DEFAULT);
+        OpenCLControl(cl_device_type type = CL_DEVICE_TYPE_ALL, unsigned int deviceNum = 0);
         ~OpenCLControl();
 
         void sync();

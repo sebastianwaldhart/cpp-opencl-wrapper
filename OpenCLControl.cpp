@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 
-OpenCLControl::OpenCLControl(cl_device_type type) {
-    _context = new OpenCLContext(type);
+OpenCLControl::OpenCLControl(cl_device_type type, unsigned int deviceNum) {
+    _context = new OpenCLContext(type, deviceNum);
 
     _context->createContext();
     _context->createCommandQueue();

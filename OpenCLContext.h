@@ -11,14 +11,18 @@
 class OpenCLContext {
     public:
         cl_device_id        device_id;
+        cl_device_id*       device_ids;
         cl_device_type      device_type;
         cl_context          context;
         cl_command_queue    command_queue;
+        cl_platform_id*     platform_ids;
         cl_platform_id      platform_id;
         cl_uint             ret_num_devices;
         cl_uint             ret_num_platforms;
 
-        OpenCLContext(cl_device_type type = CL_DEVICE_TYPE_DEFAULT);
+        unsigned int deviceNum;
+
+        OpenCLContext(cl_device_type type = CL_DEVICE_TYPE_DEFAULT, unsigned int deviceNum = 0);
 
         void getPlatformIds();
         void getDeviceIds();

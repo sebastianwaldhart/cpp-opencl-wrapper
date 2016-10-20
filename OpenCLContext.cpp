@@ -1,11 +1,14 @@
 #include "OpenCLContext.h"
 
-OpenCLContext::OpenCLContext(cl_device_type type) {
+OpenCLContext::OpenCLContext(cl_device_type type, unsigned int device) {
     device_id = NULL;
     device_type = type;
     context = NULL;
     command_queue = NULL;
     platform_id = NULL;
+    platform_ids = NULL;
+
+    deviceNum = device;
 }
 
 void OpenCLContext::createCommandQueue() {
@@ -50,21 +53,45 @@ void OpenCLContext::releaseContext() {
 }
 
 void OpenCLContext::getPlatformIds() {
-    cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
+    cl_int ret = clGetPlatformIDs(0, NULL, &ret_num_platforms);
 
     if(ret != CL_SUCCESS) {
         handleError(ret);
         throw "can't get platform ids";
     }
+
+    platform_ids = (cl_platform_id*) malloc(sizeof(cl_platform_id) * ret_num_platforms);
+    ret = clGetPlatformIDs(ret_num_platforms, platform_ids, NULL);
+
+    if(ret != CL_SUCCESS) {
+        handleError(ret);
+        free(platform_ids);
+        throw "can't get platform ids";
+    }
+
+    platform_id = platform_ids[0];
+    free(platform_ids);
 }
 
 void OpenCLContext::getDeviceIds() {
-    cl_int ret = clGetDeviceIDs(platform_id, device_type, 1, &device_id, &ret_num_devices);
+    cl_int ret = clGetDeviceIDs(platform_id, device_type, 0, NULL, &ret_num_devices);
 
     if(ret != CL_SUCCESS) {
         handleError(ret);
         throw "can't get device ids";
     }
+
+    if(deviceNum > ret_num_devices) deviceNum = ret_num_devices - 1;
+    device_ids = (cl_device_id*) malloc(sizeof(device_id) * ret_num_devices);
+    ret = clGetDeviceIDs(platform_id, device_type, ret_num_devices, device_ids, NULL);
+
+    if(ret != CL_SUCCESS) {
+        handleError(ret);
+        throw "can't get device ids";
+    }
+
+    device_id = device_ids[deviceNum];
+    free(device_ids);
 }
 
 cl_mem OpenCLContext::createBuffer(cl_mem_flags flags, size_t size, void* data) {
