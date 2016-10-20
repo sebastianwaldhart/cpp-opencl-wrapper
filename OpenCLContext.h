@@ -10,19 +10,21 @@
 
 class OpenCLContext {
     public:
-        cl_device_id        device_id;
-        cl_device_id*       device_ids;
-        cl_device_type      device_type;
-        cl_context          context;
-        cl_command_queue    command_queue;
-        cl_platform_id*     platform_ids;
-        cl_platform_id      platform_id;
-        cl_uint             ret_num_devices;
-        cl_uint             ret_num_platforms;
+        cl_device_id                    device_id;
+        cl_device_id*                   device_ids;
+        cl_device_type                  device_type;
+        cl_context                      context;
+        cl_command_queue                command_queue;
+        cl_command_queue_properties     command_queue_props;
+        cl_platform_id*                 platform_ids;
+        cl_platform_id                  platform_id;
+        cl_uint                         ret_num_devices;
+        cl_uint                         ret_num_platforms;
 
         unsigned int deviceNum;
 
-        OpenCLContext(cl_device_type type = CL_DEVICE_TYPE_DEFAULT, unsigned int deviceNum = 0);
+        OpenCLContext(cl_device_type type = CL_DEVICE_TYPE_DEFAULT, unsigned int deviceNum = 0, 
+                        cl_command_queue_properties props = 0);
 
         void getPlatformIds();
         void getDeviceIds();
@@ -46,7 +48,12 @@ class OpenCLContext {
         void releaseKernel(cl_kernel kernel);
 
         void enqueueTask(cl_kernel kernel);
-        void enqueueNDRangeKernel(cl_kernel kernel, unsigned int dimensions, const size_t* offset, const size_t* globalWorkSizes, const size_t* localWorkSizes);
+        cl_event enqueueNDRangeKernel(cl_kernel kernel, unsigned int dimensions, const size_t* offset, 
+                            const size_t* globalWorkSizes, const size_t* localWorkSizes, bool event);
+
+        void waitForEvents(size_t num, cl_event* events);
+
+        cl_ulong getProfilingInfo(cl_event event, cl_profiling_info info);
 
         void synchronize();
 

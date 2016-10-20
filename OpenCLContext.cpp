@@ -1,19 +1,20 @@
 #include "OpenCLContext.h"
 
-OpenCLContext::OpenCLContext(cl_device_type type, unsigned int device) {
+OpenCLContext::OpenCLContext(cl_device_type type, unsigned int device, cl_command_queue_properties props) {
     device_id = NULL;
     device_type = type;
     context = NULL;
     command_queue = NULL;
     platform_id = NULL;
     platform_ids = NULL;
+    command_queue_props = props;
 
     deviceNum = device;
 }
 
 void OpenCLContext::createCommandQueue() {
     cl_int ret;
-    command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
+    command_queue = clCreateCommandQueue(context, device_id, command_queue_props, &ret);
 
     if(ret != CL_SUCCESS) {
         handleError(ret);
@@ -210,15 +211,39 @@ void OpenCLContext::enqueueTask(cl_kernel kernel) {
     }
 }
 
-void OpenCLContext::enqueueNDRangeKernel(
-    cl_kernel kernel, unsigned int dimensions, const size_t* offset, const size_t* globalWorkSizes, const size_t* localWorkSizes) {
+cl_event OpenCLContext::enqueueNDRangeKernel(
+    cl_kernel kernel, unsigned int dimensions, const size_t* offset, const size_t* globalWorkSizes, const size_t* localWorkSizes, bool event) {
 
-    cl_int ret = clEnqueueNDRangeKernel(command_queue, kernel, dimensions, offset, globalWorkSizes, localWorkSizes, 0, NULL, NULL);
+    cl_event e;
+    cl_int ret = clEnqueueNDRangeKernel(command_queue, kernel, dimensions, offset, globalWorkSizes, localWorkSizes, 0, NULL, event ? &e : NULL);
 
     if(ret != CL_SUCCESS) {
         handleError(ret);
         throw "can't enqueue task";
     }
+
+    return e;
+}
+
+void OpenCLContext::waitForEvents(size_t num, cl_event* events) {
+    cl_int ret = clWaitForEvents(num, events);
+
+    if(ret != CL_SUCCESS) {
+        handleError(ret);
+        throw "can't enqueue task";
+    }
+}
+
+cl_ulong OpenCLContext::getProfilingInfo(cl_event event, cl_profiling_info info) {
+    cl_ulong value;
+    cl_int ret = clGetEventProfilingInfo(event, info, sizeof(cl_ulong), &value, NULL);
+
+    if(ret != CL_SUCCESS) {
+        handleError(ret);
+        throw "can't enqueue task";
+    }
+
+    return value;
 }
 
 void OpenCLContext::synchronize() {
@@ -304,6 +329,10 @@ void OpenCLContext::handleError(cl_int error) {
             std::cerr << "ERROR: invalid binary (CL_INVALID_BINARY)" << std::endl; break;
         case CL_BUILD_PROGRAM_FAILURE:
             std::cerr << "ERROR: a error occured while building program (CL_BUILD_PROGRAM_FAILURE)" << std::endl; break;
+        case CL_INVALID_EVENT:
+            std::cerr << "ERROR: invalid event (CL_INVALID_EVENT)" << std::endl; break;
+        case CL_PROFILING_INFO_NOT_AVAILABLE:
+            std::cerr << "ERROR: profiling info is not available (CL_PROFILING_INFO_NOT_AVAILABLE)" << std::endl; break;
         default: 
             std::cerr << "ERROR: unknown error occured" << std::endl;
     }
