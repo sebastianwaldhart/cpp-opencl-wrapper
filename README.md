@@ -36,7 +36,8 @@ target_link_libraries (main ${OpenCL_LIBRARY})
 #include "<wrapper-folder>/OpenCLControl.h"
 
 int main(int argc, char** argv) {
-  OpenCLControl* control = new OpenCLControl(CL_DEVICE_TYPE_CPU); // default = CL_DEVICE_TYPE_DEFAULT
+  OpenCLControl* control = new OpenCLControl(CL_DEVICE_TYPE_GPU, 1); // 
+default = CL_DEVICE_TYPE_ALL and 0
   
   OpenCLBufferObject* buffer = control->createBufferObject(sizeof(cl_float) * 100);
   
