@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
   size_t worksize[2] = [10, 10];
   kernel->enqueueNDRangeKernel(2, (const size_t*) worksize);
   
-  kernel->sync();
+  control->sync();
   
   delete(control); // releases all OpenCL Objects created with control
   
